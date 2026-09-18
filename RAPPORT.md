@@ -23,3 +23,23 @@ car api est l'hote par défaut
 tp-automatisation-api:latest  2.01GB 
 
 tp-automatisation-front:latest  63.4MB
+
+
+## TP2
+
+backend : 
+
+reconstruction : real    0m0,332s
+
+après modif : real    0m0,389s
+
+user : uid=0(root) gid=0(root) groups=0(root)
+
+
+frontend : 
+
+reconstruction : real    0m30,958s
+
+après modif : real    0m28,958s
+
+user : uid=0(root) gid=0(root) groups=0(root),0(root),1(bin),2(daemon),3(sys),4(adm),6(disk),10(wheel),11(floppy),20(dialout),26(tape),27(video)
