@@ -6,8 +6,10 @@ COPY . .
 
 RUN dotnet restore api.slnx
 
-RUN dotnet publish src/TaskList.Api/TaskList.Api.csproj -c Release -o app/out
+RUN dotnet publish src/TaskList.Api/TaskList.Api.csproj -c Release -o /out
 
 ENV ASPNETCORE_URLS=http://+:8080
+
+WORKDIR /out
 
 ENTRYPOINT dotnet TaskList.Api.dll

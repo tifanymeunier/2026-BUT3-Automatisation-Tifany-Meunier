@@ -25,3 +25,7 @@ coverage/
 .env.local
 .idea/
 .DS_Store
+
+*.pyc
+*.cnf
+db-data/*
