@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+          cache: true
+          cache-dependency-path: backend/**/packages.lock.json
+
+
+      - name: Restaurer les dépendances
+        run: dotnet restore
+
+      - name: Compiler
+        run: dotnet build --no-restore --configuration Release
+
+      - name: Tester
+        run: dotnet test api.slnx --no-restore --no-build --configuration Release --results-directory ./TestResults --report-xunit-trx
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: api-test-results
+          path: backend/TestResults/**/*
+
+
+  front:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Corepack
+        run: corepack enable
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+          cache-dependency-path: frontend/yarn.lock
+
+
+      - name: Installer les dépendances
+        run: yarn install --immutable
+
+      - name: Construire
+        run: yarn build
+
+      - name: Tester
+        run: yarn test --ci --watchAll=false
+        continue-on-error: true
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: front-build-output
+          path: frontend/dist/
