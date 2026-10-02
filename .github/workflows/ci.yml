@@ -27,7 +27,7 @@ jobs:
         run: dotnet build --no-restore --configuration Release
 
       - name: Tester avec couverture
-        run: dotnet test api.slnx --no-restore --no-build --configuration Release --results-directory ./TestResults --report-xunit-trx --coverage --coverage-output-format cobertura
+        run: dotnet test backend/api.slnx --no-restore --no-build --configuration Release --results-directory ./TestResults --report-xunit-trx --coverage --coverage-output-format cobertura
 
       - name: Résumé de couverture
         uses: irongut/CodeCoverageSummary@v1.3.0
