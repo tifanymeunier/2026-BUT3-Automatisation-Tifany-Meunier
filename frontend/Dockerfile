@@ -1,11 +1,13 @@
 FROM node:22-alpine AS build
 WORKDIR /app
 
-COPY . .
+COPY package.json yarn.lock .yarnrc.yml ./
 
 RUN corepack enable
 
 RUN yarn
+
+COPY . .
 
 RUN yarn build 
 

@@ -43,3 +43,25 @@ reconstruction : real    0m30,958s
 après modif : real    0m28,958s
 
 user : uid=0(root) gid=0(root) groups=0(root),0(root),1(bin),2(daemon),3(sys),4(adm),6(disk),10(wheel),11(floppy),20(dialout),26(tape),27(video)
+
+# après 3.8 :
+
+ ## back-end :
+
+tp-api:tp2      349MB      0B        
+
+uid=1654(app) gid=1654(app) groups=1654(app)
+
+après modif de program.cs : 
+
+real    0m7,152s
+user    0m0,098s
+sys     0m0,032s
+
+ ## front-end :
+
+tp-api:tp2      63.4MB    0B        
+uid=0(root) gid=0(root) groups=0(root),0(root),1(bin),2(daemon),3(sys),4(adm),6(disk),10(wheel),11(floppy),20(dialout),26(tape),27(video)
+real    0m11,068s
+user    0m0,091s
+sys     0m0,046s
