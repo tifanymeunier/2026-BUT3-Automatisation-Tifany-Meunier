@@ -79,7 +79,7 @@ jobs:
         run: yarn run lint
 
       - name: Vérifier le formatage
-        run: dotnet format backend/api.slnx --verify-no-changes
+        run: dotnet format ../backend/api.slnx --verify-no-changes
 
       - name: Tester
         run: yarn test --ci --watchAll=false
