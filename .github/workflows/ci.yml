@@ -27,8 +27,23 @@ jobs:
       - name: Compiler
         run: dotnet build --no-restore --configuration Release
 
-      - name: Tester
-        run: dotnet test api.slnx --no-restore --no-build --configuration Release --results-directory ./TestResults --report-xunit-trx
+      - name: Tester avec couverture
+        run: dotnet test api.slnx --no-restore --no-build --configuration Release --results-directory ./TestResults --report-xunit-trx --coverage --coverage-output-format cobertura
+
+      - name: Résumé de couverture
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          badge: true
+          filename: ./**/*.cobertura.xml
+          fail_below_min: true
+          thresholds: '60 80'
+          format: markdown
+          output: both
+
+      - name: Ajouter au résumé du run
+        if: always()
+        run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+        # ../code-coverage-results.md si vous avez le working directory à backend
 
       - uses: actions/upload-artifact@v4
         if: always()
@@ -61,6 +76,12 @@ jobs:
 
       - name: Construire
         run: yarn build
+
+      - name: Lint
+        run: yarn run lint
+
+      - name: Vérifier le formatage
+        run: dotnet format api.slnx --verify-no-changes
 
       - name: Tester
         run: yarn test --ci --watchAll=false

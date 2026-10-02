@@ -65,3 +65,8 @@ uid=0(root) gid=0(root) groups=0(root),0(root),1(bin),2(daemon),3(sys),4(adm),6(
 real    0m11,068s
 user    0m0,091s
 sys     0m0,046s
+
+TP3
+
+1) 3 problèmes (2 erreurs et 1 warning)
+2) Les deux erreurs étaient un let au lieu d'un const
