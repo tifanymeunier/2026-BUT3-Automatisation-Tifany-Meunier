@@ -90,3 +90,21 @@ jobs:
         with:
           name: front-build-output
           path: frontend/dist/
+  securite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Audit npm
+        working-directory: ./frontend
+        run: corepack enable && yarn npm audit --severity high
+
+      - name: Audit NuGet
+        run: sortie=$(dotnet list backend/ api.slnx package --vulnerable --include-transitive)
+          echo "$sortie"
+          
+          if echo "$sortie" | grep -q "vulnerable"; then
+            exit 1
+          fi
+     # Alternative plus simple pour l'audit nuget
+     # dotnet restore -p:WarningsAsErrors="NU1903"
