@@ -73,3 +73,5 @@ TP3
 2) Aucune erreur concernait le bon fonctionnement du code
 
 3) J'ai choisi la solution B, c'est la plus simple à mettre en place lors d'un tp, notamment lorsque je n'ai pas écrit tout le code du projet. 
+
+4) ignore-unfixed : true n'est pas une bonne idée car elle laisse passer des potentielles failles graves

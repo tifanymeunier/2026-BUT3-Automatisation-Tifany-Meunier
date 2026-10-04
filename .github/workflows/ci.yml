@@ -109,3 +109,24 @@ jobs:
             fi
      # Alternative plus simple pour l'audit nuget
      # dotnet restore -p:WarningsAsErrors="NU1903"
+      - name: Construire l'image API
+        run: docker build -t api:scan ./backend
+
+      - name: Scanner l'image
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: 'api:scan'
+          severity: 'CRITICAL'
+          exit-code: '1'
+          ignore-unfixed: true
+
+      - name: Construire l'image Web
+        run: docker build -t web:scan ./frontend
+
+      - name: Scanner l'image Web
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: 'web:scan'
+          severity: 'HIGH,CRITICAL'
+          exit-code: '1'
+          ignore-unfixed: true
