@@ -174,10 +174,10 @@ jobs:
         run: |
           ssh ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} -p ${{ secrets.VM_SSH_PORT }} \
             'docker version --format "{{.Server.Version}}"'
-            
+
       - name: Copier le fichier Compose
         run: |
-          scp -P ${{ secrets.VM_SSH_PORT }} deploy/compose.test.yml \
+          scp -P ${{ secrets.VM_SSH_PORT }} ../deploy/compose.test.yml \
             ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }}:~/apps/test/compose.yml
 
       - name: Déployer
