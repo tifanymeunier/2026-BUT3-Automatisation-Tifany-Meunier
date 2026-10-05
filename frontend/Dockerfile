@@ -1,8 +1,6 @@
 FROM node:22-alpine AS build
 WORKDIR /app
 
-RUN apk update && apk upgrade --no-cache
-
 COPY package.json yarn.lock .yarnrc.yml ./
 
 RUN corepack enable
@@ -14,6 +12,8 @@ COPY . .
 RUN yarn build 
 
 FROM nginx:1.31-alpine
+
+RUN apk update && apk upgrade --no-cache
 
 COPY --from=build /app/dist /usr/share/nginx/html
 
