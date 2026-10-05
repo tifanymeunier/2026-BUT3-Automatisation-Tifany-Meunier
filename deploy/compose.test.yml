@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mariadb:12
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+      MARIADB_DATABASE: "taskdb"
+      MARIADB_USER: "tasks"
+      MARIADB_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - ./db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  api:
+    image: docker.iut.arcanit.io/${REPO}/api:${IMAGE_TAG}
+    environment:
+      Database__type: "MySql"
+      Database__host: "db:3306"
+      Database__database: "taskdb"
+      Database__user: "tasks"
+      Database__password: "${DB_PASSWORD}"
+      ASPNETCORE_ENVIRONMENT: dev
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  front:
+    image: docker.iut.arcanit.io/${REPO}/web:${IMAGE_TAG}
+    ports:
+      - "55802:80"
+    depends_on:
+      - api
+    restart: unless-stopped
