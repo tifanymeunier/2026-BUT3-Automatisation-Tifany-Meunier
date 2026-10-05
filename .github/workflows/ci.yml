@@ -166,6 +166,7 @@ jobs:
       run:
         working-directory: ./
     steps:
+      - uses: actions/checkout@v4
       - name: Configurer SSH
         run: |
           mkdir -p ~/.ssh
