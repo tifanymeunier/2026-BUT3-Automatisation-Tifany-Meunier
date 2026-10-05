@@ -17,5 +17,4 @@
 		</PackageReference>
 		<PackageReference Include="ServiceStack.OrmLite.MySql" Version="10.1.4" />
 	</ItemGroup>
-
 </Project>

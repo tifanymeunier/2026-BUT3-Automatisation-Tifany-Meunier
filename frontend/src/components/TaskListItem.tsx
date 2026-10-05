@@ -15,7 +15,7 @@ export default function TaskListItem({ task }: { task: Task }) {
   const updateTask = useUpdateTask()
   const deleteTask = useDeleteTask()
   const { notifySuccess, notifyError } = useNotifications()
-  let busy = updateTask.isPending || deleteTask.isPending
+  const busy = updateTask.isPending || deleteTask.isPending
 
   function toggleCompletion() {
     const isCompleted = !task.isCompleted

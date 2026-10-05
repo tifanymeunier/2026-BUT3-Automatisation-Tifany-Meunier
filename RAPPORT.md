@@ -65,3 +65,16 @@ uid=0(root) gid=0(root) groups=0(root),0(root),1(bin),2(daemon),3(sys),4(adm),6(
 real    0m11,068s
 user    0m0,091s
 sys     0m0,046s
+
+TP3
+
+1) 3 problèmes (2 erreurs et 1 warning)
+
+2) Aucune erreur concernait le bon fonctionnement du code
+
+3) J'ai choisi la solution B, c'est la plus simple à mettre en place lors d'un tp, notamment lorsque je n'ai pas écrit tout le code du projet. 
+
+4) ignore-unfixed : true n'est pas une bonne idée car elle laisse passer des potentielles failles graves
+
+5) commentaires laissés : "le workflow fonctionne parfaitement et est visible, le seuil de couverture à été abaissé.
+J'approuve la pull request"
