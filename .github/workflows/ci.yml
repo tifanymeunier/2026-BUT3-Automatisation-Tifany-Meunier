@@ -151,4 +151,10 @@ jobs:
             docker.iut.arcanit.io/${{ secrets.DOCKER_USER }}/api:main
 
       - name: Publier le front
-        # À COMPLÉTER, nommer l'image "web"
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          push: true
+          tags: |
+            docker.iut.arcanit.io/${{ secrets.DOCKER_USER }}/web:${{ github.sha }}
+            docker.iut.arcanit.io/${{ secrets.DOCKER_USER }}/web:main
