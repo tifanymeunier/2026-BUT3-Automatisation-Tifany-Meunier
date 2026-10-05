@@ -127,3 +127,34 @@ jobs:
           severity: 'HIGH,CRITICAL'
           exit-code: '1'
           ignore-unfixed: true
+
+  publier:
+    needs: [api, front, securite]
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/login-action@v3
+        with:
+          registry: docker.iut.arcanit.io
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Publier l'API
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          push: true
+          tags: |
+            docker.iut.arcanit.io/${{ secrets.DOCKER_USER }}/api:${{ github.sha }}
+            docker.iut.arcanit.io/${{ secrets.DOCKER_USER }}/api:main
+
+      - name: Publier le front
+        uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          push: true
+          tags: |
+            docker.iut.arcanit.io/${{ secrets.DOCKER_USER }}/web:${{ github.sha }}
+            docker.iut.arcanit.io/${{ secrets.DOCKER_USER }}/web:main
