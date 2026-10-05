@@ -78,3 +78,11 @@ TP3
 
 5) commentaires laissés : "le workflow fonctionne parfaitement et est visible, le seuil de couverture à été abaissé.
 J'approuve la pull request"
+
+
+## TP4
+
+1) 
+api : sha256:b015965c428b61a42efdd568c7451ee4702e282da1a9de1733c44acc27099475
+
+web : sha256:b61deb122816b89e6a0fe47f8cb7354af84363478dd81a41bd5225d7b542b4de
