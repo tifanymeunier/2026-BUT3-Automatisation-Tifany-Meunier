@@ -76,4 +76,5 @@ TP3
 
 4) ignore-unfixed : true n'est pas une bonne idée car elle laisse passer des potentielles failles graves
 
-5) commentaires laissés : 
+5) commentaires laissés : "le workflow fonctionne parfaitement et est visible, le seuil de couverture à été abaissé.
+J'approuve la pull request"
