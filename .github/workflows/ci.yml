@@ -101,8 +101,8 @@ jobs:
         run: corepack enable && yarn npm audit --severity high
 
       - name: Audit NuGet
-        run: dotnet list backend/api.slnx package --vulnerable --include-transitive
-        
+        run: dotnet restore backend/api.slnx package --vulnerable --include-transitive
+
      # Alternative plus simple pour l'audit nuget
      # dotnet restore -p:WarningsAsErrors="NU1903"
       - name: Construire l'image API
