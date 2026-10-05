@@ -162,6 +162,9 @@ jobs:
   deployer-test:
     needs: []
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
     steps:
       - name: Configurer SSH
         run: |
@@ -177,7 +180,7 @@ jobs:
 
       - name: Copier le fichier Compose
         run: |
-          scp -P ${{ secrets.VM_SSH_PORT }} ../deploy/compose.test.yml \
+          scp -P ${{ secrets.VM_SSH_PORT }} deploy/compose.test.yml \
             ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }}:~/apps/test/compose.yml
 
       - name: Déployer
