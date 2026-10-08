@@ -184,4 +184,4 @@ jobs:
       - name: Déployer
         run: |
           ssh -p ${{ secrets.VM_SSH_PORT }} ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} \
-            "cd ~/apps/test && IMAGE_TAG=${{ github.sha }} docker compose up -d --pull always"
+            "cd ~/work/apps/test && IMAGE_TAG=${{ github.sha }} docker compose up -d --pull always"
