@@ -176,12 +176,12 @@ jobs:
           ssh ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} -p ${{ secrets.VM_SSH_PORT }} \
             'docker version --format "{{.Server.Version}}"'
 
+      - name: Créer le dossier distant
+        run: |
+          ssh -p ${{ secrets.VM_SSH_PORT }} ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} \
+            "mkdir -p /home/etu58/work/apps/test"
+
       - name: Copier le fichier Compose
         run: |
           scp -P ${{ secrets.VM_SSH_PORT }} deploy/compose.test.yml \
-            ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }}:~/work/apps/test/compose.yml
-
-      - name: Déployer
-        run: |
-          ssh -p ${{ secrets.VM_SSH_PORT }} ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} \
-            "cd ~/work/apps/test && IMAGE_TAG=${{ github.sha }} docker compose up -d --pull always"
+            ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }}:/home/etu58/work/apps/test/compose.yml
