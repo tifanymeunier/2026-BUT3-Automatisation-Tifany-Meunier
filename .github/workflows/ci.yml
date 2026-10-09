@@ -185,3 +185,8 @@ jobs:
         run: |
           scp -P ${{ secrets.VM_SSH_PORT }} deploy/compose.test.yml \
             ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }}:/home/etu58/work/apps/test/compose.yml
+      
+      - name: Déployer
+        run: |
+          ssh -p ${{ secrets.VM_SSH_PORT }} ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} \
+            "cd ~/apps/test && IMAGE_TAG=${{ github.sha }} docker compose up -d --pull always"
