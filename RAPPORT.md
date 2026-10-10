@@ -86,3 +86,9 @@ J'approuve la pull request"
 api : sha256:b015965c428b61a42efdd568c7451ee4702e282da1a9de1733c44acc27099475
 
 web : sha256:b61deb122816b89e6a0fe47f8cb7354af84363478dd81a41bd5225d7b542b4de
+
+2) l'attaque man in the middle est possible, pour changer ça, il faudrait que l'empreinte soit toujours la même
+
+3) le fichier ne doit pas être accessible publiquement car il contient des informations qui pourraient permettre d'accèder à des informations telles que la BD
+
+4) Le build a échoué à cause d'un problème de chemin et de permissions, empéchant la copie du fichier compose.yml dans apps/ . J'ai donc mis le chemin absolu dans ci.yml. L'information passe à l'aide d'une variable d'environement dans le docker compose

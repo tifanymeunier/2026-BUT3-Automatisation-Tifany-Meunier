@@ -163,6 +163,7 @@ jobs:
     needs: []
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Configurer SSH
         run: |
           mkdir -p ~/.ssh
@@ -174,3 +175,18 @@ jobs:
         run: |
           ssh ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} -p ${{ secrets.VM_SSH_PORT }} \
             'docker version --format "{{.Server.Version}}"'
+
+      - name: Créer le dossier distant
+        run: |
+          ssh -p ${{ secrets.VM_SSH_PORT }} ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} \
+            "mkdir -p /home/etu58/work/apps/test"
+
+      - name: Copier le fichier Compose
+        run: |
+          scp -P ${{ secrets.VM_SSH_PORT }} deploy/compose.test.yml \
+            ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }}:/home/etu58/work/apps/test/compose.yml
+      
+      - name: Déployer
+        run: |
+          ssh -p ${{ secrets.VM_SSH_PORT }} ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} \
+            "cd ~/apps/test && IMAGE_TAG=${{ github.sha }} docker compose up -d --pull always"
