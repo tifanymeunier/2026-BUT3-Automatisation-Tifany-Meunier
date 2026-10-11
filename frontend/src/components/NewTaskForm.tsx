@@ -27,7 +27,7 @@ export default function NewTaskForm() {
       {
         onSuccess: () => {
           setTitle('')
-          notifySuccess('Task added.')
+          notifySuccess('Task added MODIF TEST.')
         },
         onError: (error) => notifyError(`Could not add the task: ${error.message}`),
       },

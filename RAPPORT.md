@@ -94,3 +94,15 @@ web : sha256:b61deb122816b89e6a0fe47f8cb7354af84363478dd81a41bd5225d7b542b4de
 4) Le build a échoué à cause d'un problème de chemin et de permissions, empéchant la copie du fichier compose.yml dans apps/ . J'ai donc mis le chemin absolu dans ci.yml. L'information passe à l'aide d'une variable d'environement dans le docker compose
 
 Ensuite j'ai eu une erreur sur deployer-test car il échouait car publier n'etait pas effectué, en effet il n'avait même pas eu le temps de se lancer.
+
+5) sha dans github :  #19 pushing docker.iut.arcanit.io/***/api:bf3f22e432c98ca21a2944b70ed659f0c2fe693e with docker
+
+docker inspect --format '{{.Config.Image}}' $(docker compose -f ~/apps/test/compose.yml ps -q api) : docker.iut.arcanit.io/etu58/api:bf3f22e432c98ca21a2944b70ed659f0c2fe693e
+
+ce sont donc bien les mêmes sha ! 
+
+
+6) j'ai modifié le mot de passe, et essayé de reconstruire l'image mais à cause du mot de passe changé :
+docker.iut.arcanit.io/etu58/api   bf3f22e432c98ca21a2944b70ed659f0c2fe693e   
+
+le digest est bien le même que précédemment. 
