@@ -166,7 +166,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Configurer SSH
         run: |
-          mkdir -p ~/.ssh
+          install -m 700 -d ~/.ssh
           echo "${{ secrets.VM_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -p ${{ secrets.VM_SSH_PORT }} -H ${{ secrets.VM_HOST }}  >> ~/.ssh/known_hosts
