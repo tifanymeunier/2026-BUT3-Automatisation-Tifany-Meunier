@@ -160,7 +160,7 @@ jobs:
             docker.iut.arcanit.io/${{ secrets.DOCKER_USER }}/web:main
   
   deployer-test:
-    needs: []
+    needs: [publier]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
