@@ -163,14 +163,40 @@ jobs:
     needs: []
     runs-on: ubuntu-latest
     steps:
-      - name: Configurer SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.VM_SSH_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -p ${{ secrets.VM_SSH_PORT }} -H ${{ secrets.VM_HOST }}  >> ~/.ssh/known_hosts
+      - uses: actions/checkout@v4
+      #- name: Configurer SSH
+      #  run: |
+      #    install -m 700 -d ~/.ssh
+      #    echo "${{ secrets.VM_SSH_KEY }}" > ~/.ssh/id_ed25519
+      #    chmod 600 ~/.ssh/id_ed25519
+      #    ssh-keyscan -p ${{ secrets.VM_SSH_PORT }} -H ${{ secrets.VM_HOST }}  >> ~/.ssh/known_hosts
+      - name: Créer le dossier SSH
+        run: install -m 700 -d ~/.ssh
 
+      - name: Écrire la clé privée
+        run: |
+          printf '%s\n' "${{ secrets.VM_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+      - name: Récupérer l'empreinte du serveur
+        run: ssh-keyscan -p ${{ secrets.VM_SSH_PORT }} -H ${{ secrets.VM_HOST }} >> ~/.ssh/known_hosts
+      
       - name: Vérifier l'accès
         run: |
           ssh ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} -p ${{ secrets.VM_SSH_PORT }} \
             'docker version --format "{{.Server.Version}}"'
+
+      - name: Créer le dossier distant
+        run: |
+          ssh -p ${{ secrets.VM_SSH_PORT }} ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} \
+            "mkdir -p /home/etu58/work/apps/test"
+
+      - name: Copier le fichier Compose
+        run: |
+          scp -P ${{ secrets.VM_SSH_PORT }} deploy/compose.test.yml \
+            ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }}:/home/etu58/work/apps/test/compose.yml
+      
+      - name: Déployer
+        run: |
+          ssh -p ${{ secrets.VM_SSH_PORT }} ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} \
+            "echo '${{ secrets.DOCKER_PASSWORD }}' | docker login docker.iut.arcanit.io -u '${{ secrets.DOCKER_USER }}' --password-stdin && cd ~/apps/test && IMAGE_TAG=${{ github.sha }} docker compose up -d --pull always"
