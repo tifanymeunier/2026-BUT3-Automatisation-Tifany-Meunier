@@ -27,8 +27,5 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 
 USER $APP_UID
 
-WORKDIR /out
-
-ENTRYPOINT ["dotnet", "Api.dll"]
-
+ENTRYPOINT ["dotnet", "TaskList.Api.dll"]
 
