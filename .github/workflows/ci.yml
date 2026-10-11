@@ -199,4 +199,4 @@ jobs:
       - name: Déployer
         run: |
           ssh -p ${{ secrets.VM_SSH_PORT }} ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} \
-            "cd ~/apps/test && IMAGE_TAG=${{ github.sha }} docker compose up -d --pull always"
+            "echo '${{ secrets.DOCKER_PASSWORD }}' | docker login docker.iut.arcanit.io -u '${{ secrets.DOCKER_USER }}' --password-stdin && cd ~/apps/test && IMAGE_TAG=${{ github.sha }} docker compose up -d --pull always"
