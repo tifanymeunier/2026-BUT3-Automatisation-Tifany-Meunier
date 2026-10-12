@@ -193,7 +193,7 @@ jobs:
 
       - name: Copier le fichier Compose
         run: |
-          scp -P ${{ secrets.VM_SSH_PORT }} deploy/compose.test.yml \
+          scp -P ${{ secrets.VM_SSH_PORT }} deploy/compose.yml \
             ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }}:/home/etu58/work/apps/test/compose.yml
       
       - name: Déployer
