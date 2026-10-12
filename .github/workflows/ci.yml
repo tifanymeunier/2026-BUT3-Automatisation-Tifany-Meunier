@@ -3,7 +3,7 @@ permissions:
   contents: read
 on:
   push:
-    branches: [main,tp3-inspection]
+    branches: [main,tp3-inspection,tp5-production]
   pull_request:
 
 jobs:
